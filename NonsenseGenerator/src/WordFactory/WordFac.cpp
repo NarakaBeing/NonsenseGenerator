@@ -1,5 +1,4 @@
 #include "WordFac.h"
-#include "../Interpreter/EnhanAddon.h"
 using namespace std;
 static random_device RD;
 static mt19937 Seed(RD());
@@ -7,39 +6,43 @@ Recorder &Recorder::GetRecorder() {
     static auto instance(new Recorder);
     return *instance;
 }
-map<string, Part> &Recorder::GetLexi() {
-    static auto Lexicon(new map<string,Part>);
+map<string, Product> &Recorder::GetLexi() {
+    static auto Lexicon(new map<string,Product>);
     return *Lexicon;
 }
-void Recorder::Regist(string& Key,Part& instance) {
+void Recorder::Regist(string& Key,Product& instance) {
     Build.GetLexi().insert(make_pair(Key,instance));
 }
-Part &Recorder::operator()(string Key, string&& Words) {
-    Part* instance = &Builder(Words);
+Product &Recorder::operator()(string Key, string&& Words, bool&& ESL) {
+    Product* instance = &Builder(Words,ESL);
     Recorder::Regist(Key,*instance);
     return *instance;
 }
-PartFac &PartFac::GetBuilder() {
-    static auto Factory(new PartFac);
+ProductFac &ProductFac::GetBuilder() {
+    static auto Factory(new ProductFac);
     return *Factory;
 }
-Part &PartFac::operator()(string Words) {
-    instance = new Part;
-    PartFac::input(Words,*instance);
+Product &ProductFac::operator()(string Words,bool ESU) {
+    instance = new Product;
+    ProductFac::input(Words,*instance,ESU);
     return *instance;
 }
-void PartFac::input(string &Ense,Part& instance) {
-    char Comps[Ense.size()];
-    strcpy(Comps,Ense.c_str());
-    string word;
-    char *p = strtok(Comps, "|");
-    while (p != nullptr) {
-        word.assign(p);
-        instance.WordLib.push_back(word);
-        p = strtok(nullptr, "|");
-    }
+void ProductFac::input(string &Ense,Product& instance,bool ESL) {
+    auto Encapsulate = [&]()  -> void {
+        char Comps[Ense.size()];
+        strcpy(Comps,Ense.c_str());
+        string word;
+        char *p = strtok(Comps, "|");
+        while (p != nullptr) {
+            word.assign(p);
+            instance.WordLib.push_back(word);
+            p = strtok(nullptr, "|");
+        }
+    };
+    ESL ? Encapsulate() : instance.WordLib.push_back(Ense);
 }
-string Part::Random() {
+string Product::Random() {
     uniform_int_distribution<int> rd(0,(int)WordLib.size() - 1);
-    return WordLib[rd(Seed)];
+    if((int)WordLib.size() == 1)return WordLib[0];
+    else return WordLib[rd(Seed)];
 }

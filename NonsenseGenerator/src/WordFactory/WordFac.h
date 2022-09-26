@@ -1,4 +1,3 @@
-
 #ifndef 废话生成器_WORDFAC_H
 #define 废话生成器_WORDFAC_H
 #include <vector>
@@ -7,35 +6,36 @@
 #include <iostream>
 #include <random>
 using namespace std;
-class Part;
-class PartFac;
-class PartFac{
+class Product;
+class ProductFac;
+class ProductFac{
 private:
-   PartFac(){};
+   ProductFac(){};
 public:
-    static PartFac &GetBuilder();
-    Part &operator()(string Words);
+    static ProductFac &GetBuilder();
+    Product &operator()(string Words,bool ESL);
 protected:
-    static void input(string& Ense,Part& instance);
-    Part* instance;
+    static void input(string& Ense,Product& instance,bool ESL);
+    Product* instance;
 };
-class Part{
-    friend class PartFac;
+class Product{
+    friend class ProductFac;
 public:
     string Random();
 protected:
     vector<string> WordLib;
 };
+
 class Recorder{
 private:
     Recorder(){};
-    static void Regist(string& Key,Part& instance);
 public:
     static Recorder& GetRecorder();
-    static map<string,Part>& GetLexi();
-    Part &operator()(string Key,string&& Words);
+    static map<string,Product>& GetLexi();
+    Product &operator()(string Key,string&& Words,bool&& ESL);
 protected:
-    PartFac Builder = PartFac::GetBuilder();
+    ProductFac Builder = ProductFac::GetBuilder();
+    static void Regist(string& Key,Product& instance);
 };
 static Recorder Build = Recorder::GetRecorder();
 #endif //废话生成器_WORDFAC_H
