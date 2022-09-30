@@ -19,7 +19,7 @@ public:
     static Word &Cre(string&& Key,string&& Words){
         auto Build = [&](Word& WordInstance) -> void {
             WordInstance.Information.Key = Key;
-            WordInstance.Information.Lib = lysis(Words,(char*)"|");
+            WordInstance.Information.Lib = lysis(Words,'|');
         };
         Word* WordType(new Word);
         Build(*WordType);
@@ -53,6 +53,6 @@ static auto Adv2=(Word::Cre("/adv2","无奈地|失望地|愤怒地|开心地|用
 
 static auto Prep=(Word::Cre("/prep","中|里面|外面|上面|下面|内部"));
 
-static auto Oper=(Word::Cre("/punc","。|，|！|？"));
+static auto Punc=(Word::Cre("/punc","。|，|！|？"));
 
 #endif //废话生成器_WORD_HPP

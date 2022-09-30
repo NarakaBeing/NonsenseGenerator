@@ -8,6 +8,6 @@
 #include <vector>
 #include <map>
 using namespace std;
-vector<string>lysis(string &Data,char* Symbol);
+vector<string>lysis(string &Data,char Symbol) ;
 string GetRandomStr(vector<string>& Values);
 #endif //废话生成器_FUNC_H

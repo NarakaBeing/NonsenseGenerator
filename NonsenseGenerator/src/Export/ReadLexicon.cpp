@@ -12,14 +12,13 @@ void ReadLexicon::Dispose(string &Original) {
 }
 
 void ReadLexicon::FactorizeWord(string &Data) {
-    vector<string> Ense = lysis(Data,(char*)":");
+    vector<string> DataBlocks = lysis(Data,':');
     Data.clear();
-    for(auto &Elem : Ense){
-        vector<string> random = lysis(Elem,(char*)"|");
+    for(auto &Block : DataBlocks){
+        vector<string> random = lysis(Block,'|');
         Data.append(GetRandomStr(random));
     }
 }
-
 void ReadLexicon::AnalyseData(string &Sentence) {
     auto WordLib = FinalLib::MainLib();
     auto replace
