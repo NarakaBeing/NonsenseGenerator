@@ -3,4 +3,4 @@ project("废话生成器")
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled src/main.cpp src/WordFactory/WordFac.cpp src/WordFactory/WordFac.h src/WordFactory/WordLib.h src/EnhanAddon/EnhanAccess.cpp src/EnhanAddon/EnhanAccess.h src/EnhanAddon/EnhanWords.h)
+add_executable(untitled src/main.cpp src/Imported/WriteLexicon.cpp src/Imported/WriteLexicon.h src/Export/ReadLexicon.cpp src/Export/ReadLexicon.h src/Imported/Word/Word.hpp src/Imported/Word/Interface.hpp src/Imported/Word/Lib.h src/CFunction/Func.cpp src/CFunction/Func.h)

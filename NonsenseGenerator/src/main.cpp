@@ -1,16 +1,14 @@
 
 #include <iostream>
-#include "EnhanAddon/EnhanAccess.h"
-#include "EnhanAddon/EnhanWords.h"
-#include "WordFactory/WordLib.h"
+#include "Imported/Word/Lib.h"
+#include "Export/ReadLexicon.h"
 using namespace std;
+
+auto Read = ReadLexicon::GetInstance();
 int main(void) {
-    srand((unsigned)time(nullptr));
-//    for(int i = 0; i < 10; i++){
-//        cout/Chowod(HeadCon)/Obj/Chowod(MediaCon)/Action/Operator;
-//    }
-string str = R"(/Obj/Action)";
-InPre(str);
-cout << str;
+    for(int index = 0;index < 3;index++){
+        string str = R"(/noun:和:/noun:/vebi|/verb/noun:/punc)";
+        Read.Dispose(str);cout << str;
+    }
     return 0;
 }
