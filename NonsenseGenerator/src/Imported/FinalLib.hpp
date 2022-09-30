@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <random>
 using namespace std;
 class ExtractAgent{
 public:

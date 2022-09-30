@@ -4,8 +4,10 @@
 using namespace std;
 
 auto Read = ReadLexicon::GetInstance();
-int main(void) {
-    string str = R"(/noun/noun)";
-    Read.Dispose(str);cout << str;
+int main() {
+    for(int i = 0;i< 20;i++){
+        string str = R"(/Sentence)";
+        Read.Dispose(str);cout << str;
+    }
     return 0;
 }

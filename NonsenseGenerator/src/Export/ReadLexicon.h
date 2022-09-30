@@ -3,6 +3,7 @@
 #define 废话生成器_READLEXICON_H
 #include "../Imported/FinalLib.hpp"
 #include "../Imported/Word.hpp"
+#include "../Imported/Sentence.hpp"
 #include <string>
 #include <random>
 #include <vector>
@@ -29,7 +30,6 @@ private:
             this->Value = Pos->Data();
         }
         class ExtractAgent *Pos;
-
         string Key;
         string Value;
         int Address;

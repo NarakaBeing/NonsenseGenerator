@@ -3,4 +3,4 @@ project("废话生成器")
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(untitled src/main.cpp src/Export/ReadLexicon.cpp src/Export/ReadLexicon.h src/CFunction/Func.cpp src/CFunction/Func.h src/Imported/FinalLib.hpp src/Imported/Word.hpp)
+add_executable(untitled src/main.cpp src/Export/ReadLexicon.cpp src/Export/ReadLexicon.h src/CFunction/Func.cpp src/CFunction/Func.h src/Imported/FinalLib.hpp src/Imported/Word.hpp src/Imported/Sentence.hpp)
