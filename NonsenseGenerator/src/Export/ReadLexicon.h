@@ -1,7 +1,8 @@
 
 #ifndef 废话生成器_READLEXICON_H
 #define 废话生成器_READLEXICON_H
-#include "../Imported/Word/Interface.hpp"
+#include "../Imported/FinalLib.hpp"
+#include "../Imported/Word.hpp"
 #include <string>
 #include <random>
 #include <vector>
@@ -17,16 +18,18 @@ private:
 
     class KeyInfo{
     public:
-        KeyInfo(pair<const string,class Word>&Pos,const string &Data){
-            this->Pos = Pos;
-            this->Key =this->Pos.first;
+        KeyInfo(pair<const string,class ExtractAgent*>&Pos,const string &Data){
+            this->Pos = Pos.second;
+            this->Key = this->Pos->Information.Key;
             Reloading(Data);
         }
         void Reloading(const string &Data){
+            uniform_int_distribution<int> rd(0, (int)Pos->Information.Lib.size() - 1);
             this->Address = (int)Data.find(Key);
-            this->Value = GetRandomStr(Pos.second.Information.WordLib);
+            this->Value = Pos->Data();
         }
-        pair<string,class Word>Pos;
+        class ExtractAgent *Pos;
+
         string Key;
         string Value;
         int Address;

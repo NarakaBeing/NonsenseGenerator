@@ -21,7 +21,7 @@ void ReadLexicon::FactorizeWord(string &Data) {
 }
 
 void ReadLexicon::AnalyseData(string &Sentence) {
-    auto WordLib = Lexicon::GetWordLib();
+    auto WordLib = FinalLib::MainLib();
     auto replace
     = [&](KeyInfo &Material,string &Data) -> void {
         Material.Reloading(Data);

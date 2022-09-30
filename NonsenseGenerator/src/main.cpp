@@ -1,6 +1,5 @@
 
 #include <iostream>
-#include "Imported/Word/Lib.h"
 #include "Export/ReadLexicon.h"
 using namespace std;
 
