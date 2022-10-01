@@ -3,28 +3,23 @@
 #include "FinalLib.hpp"
 #include "../CFunction/Func.h"
 #include <random>
-static random_device Seed;
-static mt19937 MT19937(Seed());
 using namespace std;
 class Word :public ExtractAgent{
 public:
-    string Extract() override {
-        auto WordLib = Information.Lib;
-        uniform_int_distribution<int> rd(0, (int) WordLib.size() - 1);
-        string result = WordLib.at(rd(MT19937));
-        return result;
-    }
+    using ExtractAgent::Extract;
     //============================================================================
-    static Word &Cre(string&& Key,string&& Words){
-        auto Build = [&](Word& WordInstance) -> void {
+    static Word Cre(string&& Key,string&& Words){
+        auto Register = [&](Word& WordInstance) -> void {
             WordInstance.Information.Key = Key;
             WordInstance.Information.Lib = lysis(Words,'|');
+            FinalLib::Register(WordInstance);
         };
-        Word* WordType(new Word);
-        Build(*WordType);
-        FinalLib::Register(*WordType);
+        Word* WordType{new Word};
+        Register(*WordType);
         return *WordType;
-    };
+    }
+private:
+    Word() = default;
 };
 
 static auto Say=(Word::Cre("/say","拷问|说|苦诉|大吼|扯着嗓子说|劝告|尖叫|以一百分贝的声音说道|以一千分贝的声音说道|胡言乱语|说梦话道"));
@@ -52,5 +47,7 @@ static auto Adv2=(Word::Cre("/adv2","无奈地|失望地|愤怒地|开心地|用
 static auto Prep=(Word::Cre("/prep","中|里面|外面|上面|下面|内部|身上"));
 
 static auto Punc=(Word::Cre("/punc","。|，|！|。"));
+
+static auto Number = Word::Cre("/number","一|十万|三千|二十|大概七百万|大约七百万亿");
 
 #endif //废话生成器_WORD_HPP

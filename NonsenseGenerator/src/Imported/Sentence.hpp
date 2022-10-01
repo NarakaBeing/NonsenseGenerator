@@ -6,23 +6,22 @@
 using namespace std;
 class Senten :public ExtractAgent{
 public:
-    string Extract() override {
-        auto WordLib = Information.Lib;
-        uniform_int_distribution<int> rd(0, (int) WordLib.size() - 1);
-        string result = WordLib.at(rd(MT19937));
-        return result;
-    }
+    using ExtractAgent::Extract;
     //============================================================================
     static Senten &Cre(string&& Sentence){
-        static class Senten *OnlyInstance = nullptr;
-        if(OnlyInstance == nullptr){
-            OnlyInstance = new class Senten;
+        auto Register
+        = [&](unique_ptr<Senten> &OnlyInstance) -> void {
+            OnlyInstance.reset(new class Senten);
             OnlyInstance->Information.Key = "/Sentence";
             FinalLib::Register(*OnlyInstance);
-        }
+        };
+        static class unique_ptr<Senten> OnlyInstance = nullptr;
+        if(OnlyInstance == nullptr)Register(OnlyInstance);
         OnlyInstance->Information.Lib.push_back(Sentence);
         return *OnlyInstance;
     }
+private:
+    Senten() = default;
 };
 //static auto Sentence = Senten::Cre("");
 static auto Sentence1 = Senten::Cre("/head, 皇帝/noun/vebi在/noun/prep/punc");
@@ -34,6 +33,8 @@ static auto Sentence3 = Senten::Cre("国防部部长/noun和/adj的/noun在/noun
 static auto Sentence4 = Senten::Cre("/adj的/noun/verb了/noun/punc");
 
 static auto Sentence5 = Senten::Cre("/noun/verb了/noun，里面是他/adj的新/noun/punc");
+
+
 
 static auto Sentence7 = Senten::Cre("/noun/verb/noun的/noun/punc");
 
@@ -73,7 +74,7 @@ static auto Sentence24 = Senten::Cre("不幸的是，/noun在/vebi时被/noun/ve
 
 static auto Sentence25 = Senten::Cre("老/noun/verb着/adj的/noun，他在我的/noun/prep/verb了/noun的奇迹/punc");
 
-static auto Sentence26 = Senten::Cre("他把/noun/verb成七块！真可爱！好吧，我允许/noun骑着我/punc");
+static auto Sentence26 = Senten::Cre("他把/noun/verb成/number块！真可爱！好吧，我允许/noun骑着我/punc");
 
 static auto Sentence27 = Senten::Cre("看，怎么会有/noun，他们都去/noun的/noun/vebi了/punc");
 
@@ -85,9 +86,9 @@ static auto Sentence30 = Senten::Cre("/noun/verb了起来，/noun/verb了过来/
 
 static auto Sentence31 = Senten::Cre("/noun/para/noun一样在/noun/prep:/verb|/vebi:，/verb/adj的/noun/punc");
 
-static auto Sentence32 = Senten::Cre("/adv1用/noun/verb了一个/noun，马上/verb了一个/noun/punc");
+static auto Sentence32 = Senten::Cre("/adv1用/noun/verb了一个/noun，马上/verb了/number个/noun/punc");
 
-static auto Sentence33 = Senten::Cre("/vebi，享年三千岁/punc");
+static auto Sentence33 = Senten::Cre("/vebi，享年/number岁/punc");
 
 static auto Sentence34 = Senten::Cre("所有人都这么做/punc");
 

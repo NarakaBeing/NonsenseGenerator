@@ -13,6 +13,7 @@ class ReadLexicon{
 public:
     static string AssemblyModel(const string &Mold);
 private:
+    ReadLexicon() = default;
     class Material;
     static void Initialize(deque<Material>&Materials,const string &Mold);
     static void FillModel(Material &Material,string &Model);

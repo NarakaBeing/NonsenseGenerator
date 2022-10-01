@@ -1,9 +1,8 @@
 #include "ReadLexicon.h"
-string
-ReadLexicon::AssemblyModel(const string &Mold) {
+string ReadLexicon::AssemblyModel(const string &Mold) {
     deque<Material> MaterialLib;
     Initialize(MaterialLib, Mold);
-    string Model(Mold);
+    string Model{Mold};
     while(!MaterialLib.empty()){
         Material Material = MaterialLib.at(0);
         FillModel(Material,Model);
@@ -21,14 +20,14 @@ void ReadLexicon::Initialize (deque<Material> &Materials,const string &Mold) {
 }
 void ReadLexicon::FillModel(Material &Material, string &Model) {
     Material.Reloading(Model);
-    if(Material.PendingPlace != -1)Model.replace(
-                Material.PendingPlace,
+    if(Material.PendingPlace != string::npos)
+        Model.replace(Material.PendingPlace,
                 Material.key.size(),
                 Material.value);
     Material.Reloading(Model);
 }
 void ReadLexicon::ExcludeMaterial(Material &Material, deque<class Material> &Materials) {
-    if(Material.PendingPlace == -1)Materials.pop_front();
+    if(Material.PendingPlace == string::npos) Materials.pop_front();
 }
 void ReadLexicon::FactorizeModel(string &Model) {
     auto ReassemblyModel
@@ -38,7 +37,7 @@ void ReadLexicon::FactorizeModel(string &Model) {
             Model.append(choose(choices));
         }
     };
-    vector<string> ModelBlocks = lysis(Model,':');
+    auto ModelBlocks = lysis(Model,':');
     Model.clear();
     ReassemblyModel(ModelBlocks);
 }
