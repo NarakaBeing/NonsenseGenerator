@@ -3,7 +3,8 @@
 static random_device Seed;
 static mt19937 MT19937(Seed());
 vector<string>lysis(string &Sentence,char Symbol) {
-    string Data(Sentence);
+    string
+    Data(Sentence);
     auto range
     = [&](int &LIndex, int &length) -> void {
         LIndex = (int) Data.find(Symbol);

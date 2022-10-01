@@ -2,15 +2,15 @@
 #include <iostream>
 #include "Export/ReadLexicon.h"
 using namespace std;
-void test(int times){
-    for(int i = 0; i < 20 ; i++){
-        string str("/Sentence");
-        ReadLexicon::Dispose(str);
-        cout << str;
-    }
-}
+
 int main() {
-    srand(time(nullptr));
-    test(0);
+    clock_t  start = clock();
+    string Sentence;
+    for(int i = 0; i < 20; i++){
+        Sentence = ReadLexicon::AssemblyModel("/Sentence");
+        cout << Sentence;
+    }
+    clock_t  end = clock();
+    cout << endl << "use" << static_cast<double>(end - start)/CLOCKS_PER_SEC << 's' << endl;
     return 0;
 }

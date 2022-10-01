@@ -8,7 +8,7 @@ static mt19937 MT19937(Seed());
 using namespace std;
 class Word :public ExtractAgent{
 public:
-    string Data() {
+    string Extract() override {
         auto WordLib = Information.Lib;
         uniform_int_distribution<int> rd(0, (int) WordLib.size() - 1);
         string result = WordLib.at(rd(MT19937));

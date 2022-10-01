@@ -8,7 +8,7 @@
 using namespace std;
 class ExtractAgent{
 public:
-    virtual string Data(){
+    virtual string Extract(){
         return "TransferError";
     }
     struct InFo {
@@ -17,10 +17,7 @@ public:
     };
     InFo Information;
 };
-
 class FinalLib{
-private:
-    FinalLib(){}
 public:
     static map<string,ExtractAgent*>&MainLib(){
         static auto MainLib(new map<string,ExtractAgent*>);

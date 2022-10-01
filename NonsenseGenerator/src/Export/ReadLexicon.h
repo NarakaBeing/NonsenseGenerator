@@ -7,31 +7,34 @@
 #include <string>
 #include <random>
 #include <vector>
+#include <deque>
 using namespace std;
 class ReadLexicon{
 public:
-    static void Dispose(string& Original);
+    static string AssemblyModel(const string &Mold);
 private:
-    static void FactorizeWord(string& Data);
-    static void AnalyseData(string &Data);
-    ReadLexicon(){};
-
-    class KeyInfo{
+    class Material;
+    static void Initialize(deque<Material>&Materials,const string &Mold);
+    static void FillModel(Material &Material,string &Model);
+    static void ExcludeMaterial(Material &Material,deque<class Material> &Materials);
+    static void FactorizeModel(string &Model);
+    class Material{
     public:
-        KeyInfo(pair<const string,class ExtractAgent*>&Pos,const string &Data){
-            this->Pos = Pos.second;
-            this->Key = this->Pos->Information.Key;
-            Reloading(Data);
+        Material(pair<const string,class ExtractAgent*>&Words,const string &Data){
+            ExtractAgent = Words.second;
+            key = Words.first;
+            PendingPlace = (int)Data.find(key);
         }
         void Reloading(const string &Data){
-            uniform_int_distribution<int> rd(0, (int)Pos->Information.Lib.size() - 1);
-            this->Address = (int)Data.find(Key);
-            this->Value = Pos->Data();
+            uniform_int_distribution<int> rd(
+                    0, (int)ExtractAgent->Information.Lib.size() - 1);
+            PendingPlace = (int)Data.find(key);
+            value = ExtractAgent->Extract();
         }
-        class ExtractAgent *Pos;
-        string Key;
-        string Value;
-        int Address;
+        class ExtractAgent *ExtractAgent;
+        string key;
+        string value;
+        int PendingPlace;
     };
 };
 #endif //废话生成器_READLEXICON_H

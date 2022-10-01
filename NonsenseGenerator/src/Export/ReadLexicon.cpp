@@ -1,45 +1,44 @@
 #include "ReadLexicon.h"
-#include <deque>
-void ReadLexicon::Dispose(string &Original) {
-    AnalyseData(Original);
-    FactorizeWord(Original);
-    if(Original.find("“")!=-1)Original.append("”");
-}
-
-void ReadLexicon::FactorizeWord(string &Data) {
-    vector<string> DataBlocks = lysis(Data,':');
-    Data.clear();
-    for(auto &Block : DataBlocks){
-        vector<string> choices = lysis(Block,'|');
-        Data.append(choose(choices));
+string
+ReadLexicon::AssemblyModel(const string &Mold) {
+    deque<Material> MaterialLib;
+    Initialize(MaterialLib, Mold);
+    string Model(Mold);
+    while(!MaterialLib.empty()){
+        Material Material = MaterialLib.at(0);
+        FillModel(Material,Model);
+        ExcludeMaterial(Material,MaterialLib);
     }
+    FactorizeModel(Model);
+    return Model;
 }
-void ReadLexicon::AnalyseData(string &Sentence) {
+void ReadLexicon::Initialize (deque<Material> &Materials,const string &Mold) {
     auto WordLib = FinalLib::MainLib();
-    auto replace
-    = [&](KeyInfo &Material,string &Data) -> void {
-        Material.Reloading(Data);
-        if(Material.Address != -1)
-            Data.replace(
-                    Material.Address,
-                    Material.Key.size(),
-                    Material.Value
-                    );
-    };
-    auto filter
-    = [&](KeyInfo &Material,deque<KeyInfo> &Materials) -> void {
-        if(Material.Address!=-1)
-            Materials.push_back(Material);
-        Materials.pop_front();
-    };
-    deque<KeyInfo> Materials;
-    for(auto Pos:WordLib){
-        KeyInfo Material(Pos,Sentence);
+    for(auto Words:WordLib){
+        Material Material(Words,Mold);
         Materials.push_back(Material);
     }
-    while(!Materials.empty()){
-        auto Material = Materials.at(0);
-        replace(Material,Sentence);
-        filter(Material,Materials);
-    }
+}
+void ReadLexicon::FillModel(Material &Material, string &Model) {
+    Material.Reloading(Model);
+    if(Material.PendingPlace != -1)Model.replace(
+                Material.PendingPlace,
+                Material.key.size(),
+                Material.value);
+    Material.Reloading(Model);
+}
+void ReadLexicon::ExcludeMaterial(Material &Material, deque<class Material> &Materials) {
+    if(Material.PendingPlace == -1)Materials.pop_front();
+}
+void ReadLexicon::FactorizeModel(string &Model) {
+    auto ReassemblyModel
+    = [&](vector<string> ModelBlocks) -> void {
+        for(auto &Block : ModelBlocks){
+            vector<string> choices = lysis(Block,'|');
+            Model.append(choose(choices));
+        }
+    };
+    vector<string> ModelBlocks = lysis(Model,':');
+    Model.clear();
+    ReassemblyModel(ModelBlocks);
 }
