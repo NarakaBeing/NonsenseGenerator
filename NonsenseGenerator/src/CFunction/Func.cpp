@@ -1,6 +1,5 @@
 #include "Func.h"
 #include <random>
-#include <iostream>
 static random_device Seed;
 static mt19937 MT19937(Seed());
 vector<string>lysis(string &Sentence,char Symbol) {
@@ -27,10 +26,8 @@ vector<string>lysis(string &Sentence,char Symbol) {
     if(result.empty())result.push_back(Data);
     return result;
 }
-string GetRandomStr(vector<string>& Values){
-    uniform_int_distribution<int> rd(0, (int)Values.size() - 1);
-    if((int)Values.size()!=0)
-        return Values[rd(MT19937)];
-    else
-        return "";
+string choose(vector<string>& choices){
+    uniform_int_distribution<int> rd(0, (int)choices.size() - 1);
+    if((int)choices.size()==0)return "";
+    return choices[rd(MT19937)];
 }

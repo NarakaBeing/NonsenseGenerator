@@ -49,8 +49,8 @@ static auto Adv1=(Word::Cre("/adv1","忘记|原地|不断|突然|进一步|逐�
 
 static auto Adv2=(Word::Cre("/adv2","无奈地|失望地|愤怒地|开心地|用力地|绝望地|懊恼地|心不在焉地|头也不回地"));
 
-static auto Prep=(Word::Cre("/prep","中|里面|外面|上面|下面|内部"));
+static auto Prep=(Word::Cre("/prep","中|里面|外面|上面|下面|内部|身上"));
 
-static auto Punc=(Word::Cre("/punc","。|，|！"));
+static auto Punc=(Word::Cre("/punc","。|，|！|。"));
 
 #endif //废话生成器_WORD_HPP

@@ -1,13 +1,16 @@
-
+#include <unistd.h>
 #include <iostream>
 #include "Export/ReadLexicon.h"
 using namespace std;
-
-auto Read = ReadLexicon::GetInstance();
-int main() {
-    for(int i = 0;i< 20;i++){
-        string str = R"(/Sentence)";
-        Read.Dispose(str);cout << str;
+void test(int times){
+    for(int i = 0; i < 20 ; i++){
+        string str("/Sentence");
+        ReadLexicon::Dispose(str);
+        cout << str;
     }
+}
+int main() {
+    srand(time(nullptr));
+    test(0);
     return 0;
 }

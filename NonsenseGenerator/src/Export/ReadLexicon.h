@@ -10,8 +10,7 @@
 using namespace std;
 class ReadLexicon{
 public:
-    static ReadLexicon &GetInstance();
-    void Dispose(string& Original);
+    static void Dispose(string& Original);
 private:
     static void FactorizeWord(string& Data);
     static void AnalyseData(string &Data);

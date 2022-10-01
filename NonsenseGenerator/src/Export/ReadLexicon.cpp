@@ -1,10 +1,5 @@
 #include "ReadLexicon.h"
-#include "../CFunction/Func.h"
 #include <deque>
-ReadLexicon &ReadLexicon::GetInstance() {
-    static auto instance(new ReadLexicon);
-    return *instance;
-}
 void ReadLexicon::Dispose(string &Original) {
     AnalyseData(Original);
     FactorizeWord(Original);
@@ -15,8 +10,8 @@ void ReadLexicon::FactorizeWord(string &Data) {
     vector<string> DataBlocks = lysis(Data,':');
     Data.clear();
     for(auto &Block : DataBlocks){
-        vector<string> random = lysis(Block,'|');
-        Data.append(GetRandomStr(random));
+        vector<string> choices = lysis(Block,'|');
+        Data.append(choose(choices));
     }
 }
 void ReadLexicon::AnalyseData(string &Sentence) {
@@ -24,9 +19,12 @@ void ReadLexicon::AnalyseData(string &Sentence) {
     auto replace
     = [&](KeyInfo &Material,string &Data) -> void {
         Material.Reloading(Data);
-        if(Material.Address != -1){
-            Data.replace(Material.Address,Material.Key.size(),Material.Value);
-        }
+        if(Material.Address != -1)
+            Data.replace(
+                    Material.Address,
+                    Material.Key.size(),
+                    Material.Value
+                    );
     };
     auto filter
     = [&](KeyInfo &Material,deque<KeyInfo> &Materials) -> void {
@@ -43,8 +41,5 @@ void ReadLexicon::AnalyseData(string &Sentence) {
         auto Material = Materials.at(0);
         replace(Material,Sentence);
         filter(Material,Materials);
-        ;
     }
 }
-
-
