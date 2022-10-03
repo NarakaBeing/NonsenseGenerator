@@ -9,7 +9,8 @@ public:
     using ExtractAgent::Extract;
     //============================================================================
     static Word Cre(string&& Key,string&& Words){
-        auto Register = [&](Word& WordInstance) -> void {
+        auto Register
+        = [&](Word& WordInstance) -> void {
             WordInstance.Information.Key = Key;
             WordInstance.Information.Lib = lysis(Words,'|');
             FinalLib::Register(WordInstance);

@@ -8,7 +8,7 @@ vector<string>lysis(string &Sentence,char Symbol) {
     = [&](int &LIndex, int &length) -> void {
         LIndex = (int) Data.find(Symbol);
         Data.erase(LIndex, 1);
-        int RIndex = (int) Data.find(Symbol);
+        int RIndex{(int) Data.find(Symbol)};
         length = RIndex - LIndex;
     };
     auto load

@@ -20,7 +20,7 @@ void ReadLexicon::Initialize (queue<Material> &Materials,const string &Mold) {
 }
 void ReadLexicon::FillModel(Material &Material, string &Model){
     Material.Reloading(Model);
-    auto detail = Material.Detail();
+    auto detail {Material.Detail()};
     if(detail.PendingPlace != string::npos){
         Model.replace(detail.PendingPlace,
                         detail.key.size(),
@@ -29,7 +29,7 @@ void ReadLexicon::FillModel(Material &Material, string &Model){
     }
 }
 void ReadLexicon::ExcludeMaterial(Material &Material, queue<class Material> &MaterialLib) {
-    auto detail = Material.Detail();
+    auto detail {Material.Detail()};
     if(detail.PendingPlace == string::npos){
         MaterialLib.pop();
     }
@@ -38,7 +38,7 @@ void ReadLexicon::FactorizeModel(string &Model) {
     auto ReassemblyModel
     = [&](vector<string> ModelBlocks) -> void {
         for(auto &Block : ModelBlocks){
-            vector<string> choices = lysis(Block,'|');
+            vector<string> choices{lysis(Block,'|')};
             Model.append(choose(choices));
         }
     };

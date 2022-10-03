@@ -4,15 +4,13 @@
 #include <map>
 #include <vector>
 #include <iostream>
-#include <cassert>
 #include "../CFunction/Func.h"
 using namespace std;
 class ExtractAgent{
 public:
     virtual string Extract(){
         auto WordLib = Information.Lib;
-        assert(!WordLib.empty());
-        string result = choose(WordLib);
+        string result{choose(WordLib)};
         return result;
     }
     struct InFo {string Key;vector<string>Lib;};
@@ -21,7 +19,7 @@ public:
 class FinalLib{
 public:
     static vector<ExtractAgent*>&MainLib(){
-        static auto MainLib(new vector<ExtractAgent*>);
+        static auto MainLib{new vector<ExtractAgent*>};
         return *MainLib;
     }
     static void Register(ExtractAgent &instance){
