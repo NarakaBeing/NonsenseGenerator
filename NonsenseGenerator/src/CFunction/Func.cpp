@@ -3,8 +3,7 @@
 static random_device Seed;
 static mt19937 MT19937(Seed());
 vector<string>lysis(string &Sentence,char Symbol) {
-    string
-    Data(Sentence);
+    string Data(Sentence);
     auto range
     = [&](int &LIndex, int &length) -> void {
         LIndex = (int) Data.find(Symbol);
@@ -13,14 +12,14 @@ vector<string>lysis(string &Sentence,char Symbol) {
         length = RIndex - LIndex;
     };
     auto load
-    = [&](int &LIndex, int &length, vector<string> &result) -> void {
-        string Word = Data.substr(LIndex, length);
+    = [&](int LIndex, int length, vector<string> &result) -> void {
+        const string Word {Data.substr(LIndex, length)};
         result.push_back(Word);
         Data.erase(LIndex, length);
     };
-    vector<string> result;
+    vector<string>  result;
     int LIndex, length;
-    while (Data.find(Symbol) != -1) {
+    while (Data.find(Symbol) != string::npos) {
         range(LIndex, length);
         load(LIndex, length, result);
     }
@@ -29,6 +28,6 @@ vector<string>lysis(string &Sentence,char Symbol) {
 }
 string choose(vector<string>& choices){
     uniform_int_distribution<int> rd(0, (int)choices.size() - 1);
-    if((int)choices.size()==0)return "";
+    if(choices.empty())return "";
     return choices[rd(MT19937)];
 }

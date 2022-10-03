@@ -1,33 +1,38 @@
 #include "ReadLexicon.h"
 string ReadLexicon::AssemblyModel(const string &Mold) {
-    deque<Material> MaterialLib;
+    static queue<Material> MaterialLib;
     Initialize(MaterialLib, Mold);
     string Model{Mold};
-    while(!MaterialLib.empty()){
-        Material Material = MaterialLib.at(0);
+    while(!MaterialLib.empty()) {
+        Material Material{MaterialLib.front()};
         FillModel(Material,Model);
         ExcludeMaterial(Material,MaterialLib);
     }
     FactorizeModel(Model);
     return Model;
 }
-void ReadLexicon::Initialize (deque<Material> &Materials,const string &Mold) {
+void ReadLexicon::Initialize (queue<Material> &Materials,const string &Mold) {
     auto WordLib = FinalLib::MainLib();
     for(auto Words:WordLib){
-        Material Material(Words,Mold);
-        Materials.push_back(Material);
+        Material Material{Words,Mold};
+        Materials.push(Material);
     }
 }
-void ReadLexicon::FillModel(Material &Material, string &Model) {
+void ReadLexicon::FillModel(Material &Material, string &Model){
     Material.Reloading(Model);
-    if(Material.PendingPlace != string::npos)
-        Model.replace(Material.PendingPlace,
-                Material.key.size(),
-                Material.value);
-    Material.Reloading(Model);
+    auto detail = Material.Detail();
+    if(detail.PendingPlace != string::npos){
+        Model.replace(detail.PendingPlace,
+                        detail.key.size(),
+                       detail.value);
+        Material.Reloading(Model);
+    }
 }
-void ReadLexicon::ExcludeMaterial(Material &Material, deque<class Material> &Materials) {
-    if(Material.PendingPlace == string::npos) Materials.pop_front();
+void ReadLexicon::ExcludeMaterial(Material &Material, queue<class Material> &MaterialLib) {
+    auto detail = Material.Detail();
+    if(detail.PendingPlace == string::npos){
+        MaterialLib.pop();
+    }
 }
 void ReadLexicon::FactorizeModel(string &Model) {
     auto ReassemblyModel

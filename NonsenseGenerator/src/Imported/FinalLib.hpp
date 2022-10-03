@@ -4,16 +4,15 @@
 #include <map>
 #include <vector>
 #include <iostream>
-#include <random>
+#include <cassert>
+#include "../CFunction/Func.h"
 using namespace std;
-static random_device Seed;
-static mt19937 MT19937(Seed());
 class ExtractAgent{
 public:
     virtual string Extract(){
         auto WordLib = Information.Lib;
-        uniform_int_distribution<int> rd(0, (int) WordLib.size() - 1);
-        string result = WordLib.at(rd(MT19937));
+        assert(!WordLib.empty());
+        string result = choose(WordLib);
         return result;
     }
     struct InFo {string Key;vector<string>Lib;};
@@ -21,13 +20,12 @@ public:
 };
 class FinalLib{
 public:
-    static map<string,ExtractAgent*>&MainLib(){
-        static unique_ptr<map<string,ExtractAgent*>>
-        MainLib(new map<string,ExtractAgent*>);
+    static vector<ExtractAgent*>&MainLib(){
+        static auto MainLib(new vector<ExtractAgent*>);
         return *MainLib;
     }
     static void Register(ExtractAgent &instance){
-        MainLib().insert(make_pair(instance.Information.Key,&instance));
+        MainLib().push_back(&instance);
     }
 };
 #endif //废话生成器_FINALLIB_HPP

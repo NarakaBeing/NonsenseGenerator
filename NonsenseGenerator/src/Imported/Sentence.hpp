@@ -10,13 +10,14 @@ public:
     //============================================================================
     static Senten &Cre(string&& Sentence){
         auto Register
-        = [&](unique_ptr<Senten> &OnlyInstance) -> void {
+        = [&](shared_ptr<Senten> &OnlyInstance) -> void {
             OnlyInstance.reset(new class Senten);
             OnlyInstance->Information.Key = "/Sentence";
             FinalLib::Register(*OnlyInstance);
         };
-        static class unique_ptr<Senten> OnlyInstance = nullptr;
-        if(OnlyInstance == nullptr)Register(OnlyInstance);
+        static class shared_ptr<Senten> OnlyInstance = nullptr;
+        if(OnlyInstance == nullptr)
+            Register(OnlyInstance);
         OnlyInstance->Information.Lib.push_back(Sentence);
         return *OnlyInstance;
     }
@@ -28,7 +29,7 @@ static auto Sentence1 = Senten::Cre("/head, 皇帝/noun/vebi在/noun/prep/punc")
 
 static auto Sentence2 = Senten::Cre("/noun/noun/degree/adj，被/noun:|和/noun:所:/vebi|/verb:/punc");
 
-static auto Sentence3 = Senten::Cre("国防部部长/noun和/adj的/noun在/noun/prep献出/noun/punc");
+static auto Sentence3 = Senten::Cre("/noun部部长/noun和/adj的/noun在/noun/prep献出/noun/punc");
 
 static auto Sentence4 = Senten::Cre("/adj的/noun/verb了/noun/punc");
 
@@ -50,7 +51,7 @@ static auto Sentence12 = Senten::Cre("不管是在/noun/prep还是/noun/prep，�
 
 static auto Sentence13 = Senten::Cre("来到/noun，我的/noun对我提出/noun请求/punc");
 
-static auto Sentence14 = Senten::Cre("根据/noun原则，/noun必须给我所有/noun，否则我将拿出/noun/punc");
+static auto Sentence14 = Senten::Cre("根据/noun原则，/noun必须给我所有/noun，否则我将/verb/noun/punc");
 
 static auto Sentence15 = Senten::Cre("/head，电影《/adj的/noun》由/noun，/noun和/noun上演/punc");
 
@@ -74,7 +75,7 @@ static auto Sentence24 = Senten::Cre("不幸的是，/noun在/vebi时被/noun/ve
 
 static auto Sentence25 = Senten::Cre("老/noun/verb着/adj的/noun，他在我的/noun/prep/verb了/noun的奇迹/punc");
 
-static auto Sentence26 = Senten::Cre("他把/noun/verb成/number块！真可爱！好吧，我允许/noun骑着我/punc");
+static auto Sentence26 = Senten::Cre("他把/noun/verb成/number块！真/adj！");
 
 static auto Sentence27 = Senten::Cre("看，怎么会有/noun，他们都去/noun的/noun/vebi了/punc");
 
