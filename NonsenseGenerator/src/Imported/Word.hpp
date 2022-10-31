@@ -7,8 +7,7 @@ using namespace std;
 class Word :public ExtractAgent{
 public:
     using ExtractAgent::Extract;
-    //============================================================================
-    static Word Cre(string&& Key,string&& Words){
+    static Word &Cre(string&& Key,string&& Words){
         auto Register
         = [&](Word& WordInstance) -> void {
             WordInstance.Information.Key = Key;
@@ -47,7 +46,7 @@ static auto Adv2=(Word::Cre("/adv2","无奈地|失望地|愤怒地|开心地|用
 
 static auto Prep=(Word::Cre("/prep","中|里面|外面|上面|下面|内部|身上"));
 
-static auto Punc=(Word::Cre("/punc","。|，|！|。"));
+static auto Punc=(Word::Cre("/punc","。|，|！"));
 
 static auto Number = Word::Cre("/number","一|十万|三千|二十|大概七百万|大约七百万亿");
 

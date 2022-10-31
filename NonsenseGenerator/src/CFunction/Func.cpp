@@ -4,26 +4,24 @@ static random_device Seed;
 static mt19937 MT19937(Seed());
 vector<string>lysis(string &Sentence,char Symbol) {
     string Data(Sentence);
-    auto range
-    = [&](int &LIndex, int &length) -> void {
+    auto range = [&](int &LIndex, int &length) -> void {
         LIndex = (int) Data.find(Symbol);
         Data.erase(LIndex, 1);
         int RIndex{(int) Data.find(Symbol)};
         length = RIndex - LIndex;
     };
-    auto load
-    = [&](int LIndex, int length, vector<string> &result) -> void {
+    auto load = [&](int LIndex, int length, vector<string> &result) -> void {
         const string Word {Data.substr(LIndex, length)};
         result.push_back(Word);
         Data.erase(LIndex, length);
     };
-    vector<string>  result;
+    vector<string>result;
     int LIndex, length;
     while (Data.find(Symbol) != string::npos) {
         range(LIndex, length);
         load(LIndex, length, result);
     }
-    if(result.empty())result.push_back(Data);
+    result.push_back(Data);
     return result;
 }
 string choose(vector<string>& choices){

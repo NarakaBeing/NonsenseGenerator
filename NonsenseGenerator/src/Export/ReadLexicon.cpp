@@ -1,48 +1,38 @@
 #include "ReadLexicon.h"
-string ReadLexicon::AssemblyModel(const string &Mold) {
-    static queue<Material> MaterialLib;
-    Initialize(MaterialLib, Mold);
+Material &ReadLexicon::instance() {
+    static shared_ptr<Material> instance{new class Material};
+    return *instance;
+}
+string ReadLexicon::operator()(const string &Mold){
+    static vector<Material> MaterialLib;
     string Model{Mold};
-    while(!MaterialLib.empty()) {
-        Material Material{MaterialLib.front()};
+    Initialize(MaterialLib, Mold);
+    for(auto &Material:MaterialLib)
         FillModel(Material,Model);
-        ExcludeMaterial(Material,MaterialLib);
-    }
     FactorizeModel(Model);
     return Model;
 }
-void ReadLexicon::Initialize (queue<Material> &Materials,const string &Mold) {
-    auto WordLib = FinalLib::MainLib();
-    for(auto Words:WordLib){
-        Material Material{Words,Mold};
-        Materials.push(Material);
-    }
+void ReadLexicon::Initialize (vector<Material> &Materials,const string &Mold) {
+    for(auto Words:FinalLib::MainLib())
+        Materials.push_back(Material::Cre(Words));
 }
 void ReadLexicon::FillModel(Material &Material, string &Model){
-    Material.Reloading(Model);
-    auto detail {Material.Detail()};
-    if(detail.PendingPlace != string::npos){
+    auto detail{Material.Reloading(Model)};
+    while(detail.PendingPlace != string::npos){
         Model.replace(detail.PendingPlace,
                         detail.key.size(),
                        detail.value);
-        Material.Reloading(Model);
-    }
-}
-void ReadLexicon::ExcludeMaterial(Material &Material, queue<class Material> &MaterialLib) {
-    auto detail {Material.Detail()};
-    if(detail.PendingPlace == string::npos){
-        MaterialLib.pop();
+        detail = Material.Reloading(Model);
     }
 }
 void ReadLexicon::FactorizeModel(string &Model) {
-    auto ReassemblyModel
-    = [&](vector<string> ModelBlocks) -> void {
+    auto ReassemblyModel = [&](vector<string> ModelBlocks) -> void {
+        Model.clear();
         for(auto &Block : ModelBlocks){
-            vector<string> choices{lysis(Block,'|')};
-            Model.append(choose(choices));
+            vector<string> words{lysis(Block,'|')};
+            Model.append(choose(words));
         }
     };
-    auto ModelBlocks = lysis(Model,':');
-    Model.clear();
+    auto ModelBlocks{lysis(Model,':')};
     ReassemblyModel(ModelBlocks);
 }

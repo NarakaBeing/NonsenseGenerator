@@ -5,37 +5,36 @@
 #include "../Imported/Sentence.hpp"
 #include <string>
 #include <random>
-#include <queue>
+
 using namespace std;
 class Material;
 class ReadLexicon{
 public:
-    static string AssemblyModel(const string &Mold);
+    Material &instance();
+    string operator()(const string &Mold);
 private:
-    ReadLexicon() = default;
-    static void Initialize(queue<Material>&Materials,const string &Mold);
-    static void FillModel(Material &Material,string &Model);
-    static void ExcludeMaterial(Material &Material,queue<class Material> &Materials);
-    static void FactorizeModel(string &Model);
+    inline static void Initialize(vector<Material>&Materials,const string &Mold);
+    inline static void FillModel(Material &Material,string &Model);
+    inline static void FactorizeModel(string &Model);
 };
 
 class Material{
     friend class ReadLexicon;
 protected:
-    Material(ExtractAgent* &Words,const string &Data){
-        ExtractAgent = Words;
-        detail.key = Words->Information.Key;
+    Material() = default;
+    static Material Cre(ExtractAgent* &Words){
+        unique_ptr<Material>Instance{new Material};
+        Instance->ExtractAgent = Words;
+        Instance->Detail.key = Words->Information.Key;;
+        return *Instance;
     }
-    void Reloading(const string &Data){
-        detail.PendingPlace = (int)Data.find(detail.key);
-        detail.value = ExtractAgent->Extract();
+    struct Detail{string key;string value;int PendingPlace{-1};};
+    Detail Reloading(const string &Data){
+        Detail.PendingPlace = (int)Data.find(Detail.key);
+        Detail.value = ExtractAgent->Extract();
+        return Detail;
     }
-    struct Detail{string key;string value;int PendingPlace;};
-    Detail detail;
-    struct Detail Detail(){
-        return detail;
-    }
-private:
-    class ExtractAgent *ExtractAgent;
+    Detail Detail;
+    ExtractAgent *ExtractAgent;
 };
 #endif //废话生成器_READLEXICON_H
