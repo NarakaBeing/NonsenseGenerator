@@ -1,16 +1,16 @@
-#include <iostream>
-#include "Export/ReadLexicon.h"
+#import <iostream>
+#import "Export/ReadLexicon.h"
 using namespace std;
 void Generator(int NumberOfSentence){
-    ReadLexicon reader;
-    for(int i = 0; i < NumberOfSentence; i++){
+    auto reader = ReadLexicon::instance();
+    for(int i = 0; i < NumberOfSentence; i++)
         cout << reader("/Sentence");
-    }
 }
-int main() {
-    clock_t start = clock();
-    Generator(20);
-    clock_t end = clock();
-    cout << endl << (double)(end-start)/CLOCKS_PER_SEC << endl;
+int main(int argc, char *argv[]) {
+    Sentence Sentence;
+    Word Word;
+    Sentence.load();
+    Word.load();
+    Generator(10);
     return 0;
 }

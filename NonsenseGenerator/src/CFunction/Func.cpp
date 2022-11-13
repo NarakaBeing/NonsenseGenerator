@@ -1,5 +1,5 @@
-#include "Func.h"
-#include <random>
+#import "Func.h"
+#import <random>
 static random_device Seed;
 static mt19937 MT19937(Seed());
 vector<string>lysis(string &Sentence,char Symbol) {
@@ -20,8 +20,7 @@ vector<string>lysis(string &Sentence,char Symbol) {
     while (Data.find(Symbol) != string::npos) {
         range(LIndex, length);
         load(LIndex, length, result);
-    }
-    result.push_back(Data);
+    } result.push_back(Data);
     return result;
 }
 string choose(vector<string>& choices){

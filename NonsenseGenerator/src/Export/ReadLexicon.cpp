@@ -1,6 +1,7 @@
-#include "ReadLexicon.h"
-Material &ReadLexicon::instance() {
-    static shared_ptr<Material> instance{new class Material};
+#import "ReadLexicon.h"
+#import <iostream>
+ReadLexicon &ReadLexicon::instance() {
+    static shared_ptr<ReadLexicon> instance{new class ReadLexicon};
     return *instance;
 }
 string ReadLexicon::operator()(const string &Mold){
@@ -26,13 +27,12 @@ void ReadLexicon::FillModel(Material &Material, string &Model){
     }
 }
 void ReadLexicon::FactorizeModel(string &Model) {
+    auto ModelBlocks{lysis(Model,':')};
     auto ReassemblyModel = [&](vector<string> ModelBlocks) -> void {
         Model.clear();
         for(auto &Block : ModelBlocks){
             vector<string> words{lysis(Block,'|')};
             Model.append(choose(words));
         }
-    };
-    auto ModelBlocks{lysis(Model,':')};
-    ReassemblyModel(ModelBlocks);
+    };ReassemblyModel(ModelBlocks);
 }

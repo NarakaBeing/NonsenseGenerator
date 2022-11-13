@@ -1,23 +1,20 @@
 #ifndef 废话生成器_READLEXICON_H
 #define 废话生成器_READLEXICON_H
-#include "../Imported/FinalLib.hpp"
-#include "../Imported/Word.hpp"
-#include "../Imported/Sentence.hpp"
+#import "../Imported/Word.hpp"
+#import "../Imported/Sentence.hpp"
 #include <string>
-#include <random>
-
 using namespace std;
 class Material;
 class ReadLexicon{
 public:
-    Material &instance();
+    static ReadLexicon &instance();
     string operator()(const string &Mold);
-private:
+protected:
+    ReadLexicon() = default;
     inline static void Initialize(vector<Material>&Materials,const string &Mold);
     inline static void FillModel(Material &Material,string &Model);
     inline static void FactorizeModel(string &Model);
 };
-
 class Material{
     friend class ReadLexicon;
 protected:
@@ -31,7 +28,7 @@ protected:
     struct Detail{string key;string value;int PendingPlace{-1};};
     Detail Reloading(const string &Data){
         Detail.PendingPlace = (int)Data.find(Detail.key);
-        Detail.value = ExtractAgent->Extract();
+        Detail.value = ExtractAgent->extract();
         return Detail;
     }
     Detail Detail;
