@@ -1,16 +1,21 @@
 #import <iostream>
-#import "Export/ReadLexicon.h"
+#import "Export/Purser.h"
 using namespace std;
-void Generator(int NumberOfSentence){
-    auto reader = ReadLexicon::instance();
-    for(int i = 0; i < NumberOfSentence; i++)
-        cout << reader("/Sentence");
+void Generator(int numberOfSentence){
+    auto Purser = Purser::getInstance();
+    string Mold;
+    for(int i = 0; i < numberOfSentence; i++)
+        Mold.append("/Sentence");
+    Mold = Purser(Mold);
+    cout << Mold;
 }
-int main(int argc, char *argv[]) {
-    Sentence Sentence;
-    Word Word;
-    Sentence.load();
-    Word.load();
+void init(vector<ExtractAgent*>&initList){
+    for(auto &Interface:initList)
+        Interface->load();
+}
+int main() {
+    vector<ExtractAgent*>InitList{new Sentence,new Word};
+    init(InitList);
     Generator(10);
     return 0;
 }

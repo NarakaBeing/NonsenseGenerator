@@ -2,7 +2,6 @@
 #define 废话生成器_Sentence_HPP
 #import "FinalLib.hpp"
 #import "../CFunction/Func.h"
-#import <iostream>
 using namespace std;
 class Sentence :public ExtractAgent{
 public:
@@ -14,8 +13,8 @@ protected:
         Sentence* OnlyInstance{new class Sentence()};
         OnlyInstance->Information.Key = "/Sentence";
         FinalLib::Register(*OnlyInstance);
-        auto Cre = [&](string&& Sentence){
-            OnlyInstance->Information.Lib.push_back(Sentence);
+        auto Cre = [&](const string& SENTENCE){
+            OnlyInstance->Information.Lib.push_back(SENTENCE);
         };
         Cre("/head, 皇帝/noun/vebi在/noun/prep/punc");
         Cre("/noun/noun/degree/adj，被/noun:|和/noun:所:/vebi|/verb:/punc");

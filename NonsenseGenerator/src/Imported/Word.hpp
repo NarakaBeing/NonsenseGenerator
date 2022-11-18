@@ -10,10 +10,10 @@ public:
 protected:
     using ExtractAgent::extract;
     void init() override{
-        auto Cre = [&](string&& Key,string&& Words){
+        auto Cre = [&](const string& KEY,const string& WORDS){
             Word* WordType{new Word};
-            WordType->Information.Key = Key;
-            WordType->Information.Lib = lysis(Words,'|');
+            WordType->Information.Key = KEY;
+            WordType->Information.Lib = lysis(WORDS,'|');
             FinalLib::Register(*WordType);
         };
         Cre("/say","拷问|说|苦诉|大吼|扯着嗓子说|劝告|尖叫|以一百分贝的声音说道|以一千分贝的声音说道|胡言乱语|说梦话道");
