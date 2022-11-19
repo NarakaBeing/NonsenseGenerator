@@ -1,5 +1,5 @@
-#ifndef 废话生成器_WORD_HPP
-#define 废话生成器_WORD_HPP
+#ifndef SentenceGenerator_WORD_HPP
+#define SentenceGenerator_WORD_HPP
 #import "FinalLib.hpp"
 #import "../CFunction/Func.h"
 using namespace std;
@@ -32,4 +32,4 @@ protected:
         Cre("/number","一|十万|三千|二十|大概七百万|大约七百万亿");
     };
 };
-#endif //废话生成器_WORD_HPP
+#endif //SentenceGenerator_WORD_HPP

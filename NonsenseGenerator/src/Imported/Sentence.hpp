@@ -1,5 +1,5 @@
-#ifndef 废话生成器_Sentence_HPP
-#define 废话生成器_Sentence_HPP
+#ifndef SentenceGenerator_Sentence_HPP
+#define SentenceGenerator_Sentence_HPP
 #import "FinalLib.hpp"
 #import "../CFunction/Func.h"
 using namespace std;
@@ -67,4 +67,4 @@ protected:
         Cre("/noun被/noun走了，只有/noun被/verb/punc");
     }
 };
-#endif //废话生成器_Sentence_HPP
+#endif //SentenceGenerator_Sentence_HPP

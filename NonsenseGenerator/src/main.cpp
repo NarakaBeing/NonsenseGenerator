@@ -2,7 +2,7 @@
 #import "Export/Purser.h"
 using namespace std;
 void Generator(int numberOfSentence){
-    auto Purser = Purser::getInstance();
+    auto Purser = Purser::form();
     string Mold;
     for(int i = 0; i < numberOfSentence; i++)
         Mold.append("/Sentence");

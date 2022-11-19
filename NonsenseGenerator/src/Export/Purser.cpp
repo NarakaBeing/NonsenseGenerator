@@ -1,29 +1,27 @@
 #import "Purser.h"
-#import <iostream>
-Purser &Purser::getInstance() {
+Purser &Purser::form() {
     static shared_ptr<Purser> instance{new class Purser};
     return *instance;
 }
 string Purser::operator()(const string &MOLD){
     string Model{MOLD};
-    factorize(Model);
     vector<Material> MaterialLib;
     init(MaterialLib);
     for(auto &Material:MaterialLib)
         fill(Material,Model);
-
+    factorize(Model);
     return Model;
 }
 void Purser::init (vector<Material> &materials) {
     for(auto Words:FinalLib::MainLib())
-        materials.push_back(Material::instance(Words));
+        materials.push_back(Material::form(Words));
 }
 void Purser::fill(Material &material, string &model){
     auto Detail{material.reloading(model)};
     while(Detail.PendingPlace != string::npos){
         model.replace(Detail.PendingPlace,
-                        Detail.key.size(),
-                       Detail.value);
+                        Detail.Key.size(),
+                       Detail.Word);
         Detail = material.reloading(model);
     }
 }

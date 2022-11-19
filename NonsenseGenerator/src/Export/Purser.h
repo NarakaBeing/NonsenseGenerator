@@ -1,5 +1,5 @@
-#ifndef 废话生成器_PURSER_H
-#define 废话生成器_PURSER_H
+#ifndef SentenceGenerator_PURSER_H
+#define SentenceGenerator_PURSER_H
 #import "../Imported/Word.hpp"
 #import "../Imported/Sentence.hpp"
 #include <string>
@@ -7,7 +7,7 @@ using namespace std;
 class Material;
 class Purser{
 public:
-    static Purser &getInstance();
+    static Purser &form();
     string operator()(const string &MOLD);
 protected:
     Purser() = default;
@@ -18,19 +18,20 @@ protected:
 class Material{
     friend class Purser;
 protected:
-    static Material instance(ExtractAgent* &ExtractAgent){
+    Material() = default;
+    struct Detail{string Key;string Word;int PendingPlace{-1};};
+    static Material form(ExtractAgent* &ExtractAgent){
         Material* Instance{new class Material};
         Instance->ExtractAgent = ExtractAgent;
-        Instance->Detail.key = ExtractAgent->Information.Key;
+        Instance->Detail.Key = ExtractAgent->Information.Key;
         return *Instance;
     }
-    struct Detail{string key;string value;int PendingPlace{-1};};
     Detail reloading(const string &DATA){
-        this->Detail.PendingPlace = int(DATA.find(Detail.key));
-        this->Detail.value = ExtractAgent->extract();
+        this->Detail.PendingPlace = int(DATA.find(Detail.Key));
+        this->Detail.Word = ExtractAgent->extract();
         return Detail;
     }
     Detail Detail;
-    ExtractAgent *ExtractAgent;
+    ExtractAgent *ExtractAgent{nullptr};
 };
-#endif //废话生成器_PURSER_H
+#endif //SentenceGenerator_PURSER_H

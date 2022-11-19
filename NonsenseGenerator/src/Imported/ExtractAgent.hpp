@@ -1,5 +1,5 @@
-#ifndef 废话生成器_EXTRACTAGENT_HPP
-#define 废话生成器_EXTRACTAGENT_HPP
+#ifndef SentenceGenerator_EXTRACTAGENT_HPP
+#define SentenceGenerator_EXTRACTAGENT_HPP
 #import <string>
 #import <vector>
 #import "../CFunction/Func.h"
@@ -11,11 +11,13 @@ protected:
     bool init_TF{false};
 public:
     void load(){
-        if(!init_TF)init();
+        if(!init_TF)
+            init();
         this->init_TF = true;
     }
 protected:
-    virtual void init(){};
+    virtual void init(){
+    };
     virtual string extract(){
         string Result{choose(this->Information.Lib)};
         return Result;
@@ -23,4 +25,4 @@ protected:
     struct InFo {string Key;vector<string>Lib;};
     InFo Information;
 };
-#endif //废话生成器_EXTRACTAGENT_HPP
+#endif //SentenceGenerator_EXTRACTAGENT_HPP

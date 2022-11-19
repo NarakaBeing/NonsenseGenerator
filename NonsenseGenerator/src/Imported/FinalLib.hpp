@@ -1,5 +1,5 @@
-#ifndef 废话生成器_FINALLIB_HPP
-#define 废话生成器_FINALLIB_HPP
+#ifndef SentenceGenerator_FINALLIB_HPP
+#define SentenceGenerator_FINALLIB_HPP
 #import <string>
 #import <vector>
 #import "../CFunction/Func.h"
@@ -13,4 +13,4 @@ public:
     }
     static void Register(ExtractAgent &instance){ MainLib().push_back(&instance); }
 };
-#endif //废话生成器_FINALLIB_HPP
+#endif //SentenceGenerator_FINALLIB_HPP
